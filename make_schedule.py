@@ -4,13 +4,19 @@ import requests
 from datetime import datetime, timedelta
 from collections import defaultdict
 
-
 # 作成開始する日
 # このコードでは次の日からを想定だが、調整可
 day_count = datetime.now() + timedelta(days=1)
 
+# スケジュールをつぎたすCSVのパス
+target_csv = 'schedule.csv'
+# target_csv = 'sample.csv'
+
+# 作成する日数
+create_days = 10
+
 check = defaultdict(bool)
-pasts = csv.DictReader(open('schedule.csv', mode='r', encoding='utf-8-sig'))
+pasts = csv.DictReader(open(target_csv, mode='r', encoding='utf-8-sig'))
 for past in pasts:
     ID = past['ID']
     year, month, day = map(int, past['date'].split('-'))
@@ -38,8 +44,6 @@ for ID, content in problems.items():
     diff = content['difficulty']
     problems_by_level[diff_calc(diff)].append(ID)
 
-# 作成する日数
-create_days = 30
 
 while create_days:
     year = day_count.year
@@ -52,7 +56,7 @@ while create_days:
         pick = sample(problem_list, 1)[0]
         problem_list.remove(pick)
         print(pick)
-        with open('schedule.csv', mode='a', newline='') as f:
+        with open(target_csv, mode='a', newline='') as f:
             csv.writer(f).writerow([pick, date_str])
     day_count += timedelta(days=1)
     create_days -= 1
