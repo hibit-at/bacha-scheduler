@@ -4,16 +4,22 @@ import requests
 from datetime import datetime, timedelta
 from collections import defaultdict
 
-# 作成開始する日
-# このコードでは次の日からを想定だが、調整可
-day_count = datetime.now() + timedelta(days=1)
 
 # スケジュールをつぎたすCSVのパス
-target_csv = 'schedule.csv'
+
 # target_csv = 'sample.csv'
+target_csv = 'schedule.csv'
+
+# 作成開始する日
+pasts = csv.DictReader(open(target_csv, mode='r', encoding='utf-8-sig'))
+list_pasts = list(pasts)
+last_date = list_pasts[-1]['date']
+year, month, day = map(int, last_date.split('-'))
+day_count = datetime(year=year, month=month, day=day) + timedelta(days=1)
+print(day_count)
 
 # 作成する日数
-create_days = 10
+create_days = 30
 
 check = defaultdict(bool)
 pasts = csv.DictReader(open(target_csv, mode='r', encoding='utf-8-sig'))
