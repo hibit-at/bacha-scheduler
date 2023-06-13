@@ -1,11 +1,11 @@
 from collections import defaultdict
 import requests
 import csv
-from datetime import datetime
+from datetime import datetime, timedelta
 from local import TOKEN
 
 # hyper paramter
-lim = 10
+lim = 11
 
 # 基準となるスケジュール
 target_csv = 'schedule.csv'
@@ -24,10 +24,21 @@ print(f'current year is {y}')
 print('enter starting MONTH DATE ex)1 1,12 25 etc')
 m, d = map(int, input().split(' '))
 start = datetime(y, m, d, 7, 30)
-print(f'starting date is {start}, okay? Y/n')
-if input() == 'n':
+print(f'starting date is {start}, okay? y')
+if input() != 'y':
     exit(0)
 cnt = 0
+
+# 作成日数を決定
+
+print(f'enter the number of creating contest')
+lim = int(input())
+print(f'the number is {lim}')
+end = start + timedelta(days=lim - 1)
+print(f'end date is {end}, okay? y')
+if input() != 'y':
+    exit(0)
+
 
 for date, problems in p_set.items():
     if date < start:

@@ -19,7 +19,7 @@ day_count = datetime(year=year, month=month, day=day) + timedelta(days=1)
 print(day_count)
 
 # 作成する日数
-create_days = 30
+create_days = 10
 
 check = defaultdict(bool)
 pasts = csv.DictReader(open(target_csv, mode='r', encoding='utf-8-sig'))
